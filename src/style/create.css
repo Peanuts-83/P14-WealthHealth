@@ -1,0 +1,67 @@
+.form {
+	margin: 30px 30px 100px 30px;
+	font-size: 1.5rem;
+}
+
+.form-parts {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	font-size: 1.5rem;
+}
+
+.form-part-left,
+.form-part-right {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 5%;
+}
+
+.form-part-pair {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 5px 0;
+	flex: 1;
+}
+
+.form-part-pair > input,
+select {
+	width: 60%;
+	height: 40px;
+	border: none;
+	border-bottom: 1px solid black;
+	font-size: 1.2rem;
+}
+
+input,
+select {
+	background-color: white;
+	color: rgb(85, 85, 85);
+}
+
+.department {
+	display: flex;
+	width: 50%;
+	height: 40px;
+	margin: 50px 25%;
+}
+
+.save-btn {
+	height: 40px;
+	padding: 0 30px;
+	/* border-style: none; */
+	color: white;
+	font-size: 1.5rem;
+	background: var(--green-medium);
+}
+
+@media screen and (max-width: 768px) {
+	.form {
+		margin: 10px 10px 100px 10px;
+	}
+	.form-parts {
+		flex-direction: column;
+	}
+}

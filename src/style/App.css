@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Balthazar&display=swap");
+
+a {
+	color: var(--green-dark);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	background-color: var(--green-superlight);
+	--green-superlight: #e7efbc;
+	--green-light: #93ad18;
+	--green-medium: #6e8417;
+	--green-dark: #5b7009;
+	--green-superdark: #293301;
+}
+
+.App {
+	position: relative;
+	text-align: center;
+	max-width: 1400px;
+	width: 100%;
+	height: 100vh;
+	background: white;
+	font-family: Balthazar;
+}
