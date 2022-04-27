@@ -33,10 +33,11 @@
 }
 
 .footer {
-	height: 50px;
+	height: 40px;
 	width: 100%;
 	max-width: 1400px;
-	background: var(--green-light);
+	background-size: 100px;
+	opacity: .4;
 	position: fixed;
 	bottom: 0;
 }

@@ -1,6 +1,11 @@
 import '../style/create.css'
+import React from 'react'
+import {SimpleSelectMenu} from 'simple-select-menu'
+import { states } from '../utils/states'
 
 const Create = () => {
+  const departmentOptions = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"]
+
   return (
     <form className='form'>
       <div className='form-parts'>
@@ -34,14 +39,11 @@ const Create = () => {
               <label htmlFor='city'>City</label>
               <input name='city' type='text' placeholder=' - ' />
             </div>
+
             <div className='form-part-pair'>
-              <label htmlFor='state'>State</label>
-              <select name='state'>
-                    <option>Please choose a State </option>
-                    <option>Alabama</option>
-                    <option>Arkansas</option>
-              </select>
+              <SimpleSelectMenu label="State" options={states} placeholder="Please choose a State" />
             </div>
+
             <div className='form-part-pair'>
               <label htmlFor='code'>Zip code</label>
               <input name='code' type='text' placeholder=' - ' />
@@ -49,17 +51,9 @@ const Create = () => {
           </fieldset>
         </div>
       </div>
-        <div className='department form-part-pair'>
-          <label htmlFor='department'>Department</label>
-          <select name='department'>
-                    <option>Please choose a department </option>
-                    <option>Sales</option>
-                    <option>Marketing</option>
-                    <option>Engineering</option>
-                    <option>Human Resources</option>
-                    <option>Legal</option>
-                </select>
-        </div>
+      <div className='department form-part-pair'>
+        <SimpleSelectMenu label="Department" options={departmentOptions} placeholder="Please choose a Department" />
+      </div>
       <input className='save-btn' type='button' value='Save' />
     </form>
   )
