@@ -13,12 +13,13 @@ import './simpleSelectMenu.css'
         @param {string} value - Value returned when selected.
 @param {string} placeholder - Text to display at start.
 @param {boolean} log - Displays nodeElement & value returned in console. Default to true.
+@param {function} setvalue - Setter to return the selected value to parent Component.
 @returns SimpleSelectMenu component.
 */
-const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'], placeholder = 'placeholder', log=true, setValue }) => {
+const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'], placeholder = 'placeholder', log=true, setvalue }) => {
     function _returnValue(e) {
         log === true && console.log(e.target, `Value : ${e.target.value}`)
-        setValue(e.target.value)
+        setvalue(e.target.value)
     }
 
     return (
@@ -53,5 +54,6 @@ SimpleSelectMenu.propTypes = {
         ])
     ),
     placeholder: PropTypes.string,
-    log: PropTypes.bool
+    log: PropTypes.bool,
+    setvalue: PropTypes.func
 }

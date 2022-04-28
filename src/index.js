@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {faChevronUp, faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import './style/index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+
+library.add(faChevronUp, faChevronDown)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

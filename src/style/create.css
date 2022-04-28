@@ -41,6 +41,10 @@ select {
 	color: rgb(85, 85, 85);
 }
 
+.simple-select-menu-select {
+	padding: 0px !important;
+}
+
 .department {
 	display: flex;
 	width: 50%;

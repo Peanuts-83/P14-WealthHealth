@@ -10,7 +10,7 @@ npm install simple-select-menu
 
 ## Usage
 
-### Four parameters shall be implemented
+### Five parameters shall be implemented
 
 ---
 
@@ -23,6 +23,7 @@ npm install simple-select-menu
 
 * **placeholder** {string} - Text displayed at start when no selection has been done.
 * **log** {boolean} - Displays nodeElement and returned value in console. *Default to true*.
+* **setter** {function} - Setter to return the selected value to parent Component.
 
 ### Get selected value
 

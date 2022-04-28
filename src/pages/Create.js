@@ -1,9 +1,14 @@
 import '../style/create.css'
-import React from 'react'
-import {SimpleSelectMenu} from 'simple-select-menu'
+import React, { useState } from 'react'
+import { SimpleSelectMenu } from 'simple-select-menu'
+import Datepicker from '../components/Datepicker'
 import { states } from '../utils/states'
 
 const Create = () => {
+  const [stateName, setStateName] = useState('')
+  const [department, setDepartment] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [birthDate, setBirthDate] = useState('')
   const departmentOptions = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"]
 
   return (
@@ -19,12 +24,10 @@ const Create = () => {
             <input name='lastName' type='text' placeholder=' - ' />
           </div>
           <div className='form-part-pair'>
-            <label htmlFor='birthDate'>Date of Birth</label>
-            <input name='birthDate' type='text' placeholder=' - ' />
+            <Datepicker label="Birth date" setvalue={setBirthDate} />
           </div>
           <div className='form-part-pair'>
-            <label htmlFor='startDate'>Start Date</label>
-            <input name='startDate' type='text' placeholder=' - ' />
+            <Datepicker label="Start date" setvalue={setStartDate} />
           </div>
         </div>
 
@@ -39,11 +42,9 @@ const Create = () => {
               <label htmlFor='city'>City</label>
               <input name='city' type='text' placeholder=' - ' />
             </div>
-
             <div className='form-part-pair'>
-              <SimpleSelectMenu label="State" options={states} placeholder="Please choose a State" />
+              <SimpleSelectMenu label="State" options={states} placeholder="Please choose a State" setvalue={setStateName} />
             </div>
-
             <div className='form-part-pair'>
               <label htmlFor='code'>Zip code</label>
               <input name='code' type='text' placeholder=' - ' />
@@ -52,7 +53,7 @@ const Create = () => {
         </div>
       </div>
       <div className='department form-part-pair'>
-        <SimpleSelectMenu label="Department" options={departmentOptions} placeholder="Please choose a Department" />
+        <SimpleSelectMenu label="Department" options={departmentOptions} placeholder="Please choose a Department" setvalue={setDepartment} />
       </div>
       <input className='save-btn' type='button' value='Save' />
     </form>

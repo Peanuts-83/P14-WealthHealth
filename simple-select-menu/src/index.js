@@ -12,11 +12,11 @@ const App = () => {
       <h1>Simple select menu</h1>
 
       <SimpleSelectMenu
-        label="Select menu with stringsb (log = false)"
+        label="Select menu with strings (log = false)"
         options={["Option 1", "Option 2"]}
         placeholder="Please choose an option"
         log={false}
-        setValue={setMenu1Value}
+        setvalue={setMenu1Value}
         />
       {menu1Value !== '' && menu1Value !== undefined && <span><em>returned value: {menu1Value}</em></span>}
       <br />
@@ -25,7 +25,7 @@ const App = () => {
         label="Select menu with objects (log = true)"
         options={[{ name: 'Option 1', value: 'opt1' }, { name: 'Option 2', value: 'opt2' }]}
         placeholder="Please choose an option"
-        setValue={setMenu2Value}
+        setvalue={setMenu2Value}
         />
       {menu2Value !== '' && menu2Value !== undefined && <span><em>returned value: {menu2Value}</em></span>}
     </div>
