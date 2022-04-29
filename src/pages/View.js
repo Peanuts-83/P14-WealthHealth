@@ -1,6 +1,9 @@
 import React from 'react'
+import {useEmployeesContext} from '../context/employeesCtx'
 
 const View = () => {
+  const employeesCtx = useEmployeesContext()
+  
   return (
     <div className='view'>
       <div className='view-top'>

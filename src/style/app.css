@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Balthazar&display=swap");
 
 a {
 	color: var(--green-dark);
@@ -31,5 +30,10 @@ a:hover {
 	width: 100%;
 	height: 100vh;
 	background: white;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.create,
+.view {
 	font-family: Balthazar;
 }

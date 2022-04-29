@@ -49,8 +49,7 @@
 .picker-month:hover > .picker-number,
 .picker-day:hover > .picker-number,
 .picker-year:hover > .picker-number {
-	font-size: 145%;
-	padding: 0;
+    font-weight: bold;
     background-color: var(--green-superlight);
 }
 
