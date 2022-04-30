@@ -11,12 +11,12 @@ import './simpleSelectMenu.css'
     @param {object} elt - Option 2 : array of objects. Value returned is the value property of object
         @param {string} name - Text to display in select menu.
         @param {string} value - Value returned when selected.
-@param {string} placeholder - Text to display at start.
+@param {string} placeholder - Text to display at start. Optional.
 @param {boolean} log - Displays nodeElement & value returned in console. Default to true.
 @param {function} setvalue - Setter to return the selected value to parent Component.
 @returns SimpleSelectMenu component.
 */
-const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'], placeholder = 'placeholder', log=true, setvalue }) => {
+const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'], placeholder, log = true, setvalue }) => {
     function _returnValue(e) {
         log === true && console.log(e.target, `Value : ${e.target.value}`)
         setvalue(e.target.value)
@@ -28,8 +28,11 @@ const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'],
             <select
                 className="simple-select-menu-select"
                 onChange={_returnValue}
-                >
-                <option className="simple-select-menu-option" value="">{placeholder}</option>
+            >
+                {placeholder !== undefined && placeholder !== false && (
+                    <option className="simple-select-menu-option" value="">{placeholder}</option>
+
+                )}
                 {options && typeof options[0] === 'string' && options.map((option, i) =>
                     (<option className="simple-select-menu-option" value={option.toLowerCase().replace(' ', '_')} key={`ssm-${i}`}>{option}</option>)
                 )

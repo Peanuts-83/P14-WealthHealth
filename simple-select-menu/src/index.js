@@ -17,7 +17,7 @@ const App = () => {
         placeholder="Please choose an option"
         log={false}
         setvalue={setMenu1Value}
-        />
+      />
       {menu1Value !== '' && menu1Value !== undefined && <span><em>returned value: {menu1Value}</em></span>}
       <br />
 
@@ -26,9 +26,20 @@ const App = () => {
         options={[{ name: 'Option 1', value: 'opt1' }, { name: 'Option 2', value: 'opt2' }]}
         placeholder="Please choose an option"
         setvalue={setMenu2Value}
-        />
+      />
+      {menu2Value !== '' && menu2Value !== undefined && <span><em>returned value: {menu2Value}</em></span>}
+
+      <SimpleSelectMenu
+        label="Select menu with objects & no placeholder"
+        options={[{ name: 'Option 1', value: 'opt1' }, { name: 'Option 2', value: 'opt2' }]}
+        log={false}
+        placeholder={false}
+        setvalue={setMenu2Value}
+      />
       {menu2Value !== '' && menu2Value !== undefined && <span><em>returned value: {menu2Value}</em></span>}
     </div>
+
+
   );
 }
 

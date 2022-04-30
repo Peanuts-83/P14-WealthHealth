@@ -8,10 +8,12 @@
 
 .logo {
 	margin-top: 3%;
+	transition: 0.4s;
 }
 
 .logobas {
 	margin-bottom: 3%;
+	transition: 0.4s;
 }
 
 .nav-btns {
@@ -35,11 +37,10 @@
 .footer {
 	height: 40px;
 	width: 100%;
-	max-width: 1400px;
+	/* max-width: 1400px; */
 	background-size: 100px;
-	opacity: .4;
-	position: fixed;
-	bottom: 0;
+	opacity: 0.4;
+	margin-top: auto;
 }
 
 @keyframes App-logo-spin {
@@ -55,5 +56,25 @@
 @media (prefers-reduced-motion: no-preference) {
 	.logo {
 		animation: App-logo-spin infinite 40s linear;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.logo {
+		width: 250px;
+	}
+	
+	.logobas {
+		width: 300px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.logo {
+		width: 150px;
+	}
+
+	.logobas {
+		width: 200px;
 	}
 }

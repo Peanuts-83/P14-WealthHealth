@@ -12,7 +12,7 @@ function EmployeeProvider(props) {
     const [employees, setEmployees] = useState(initialState)
 
     useEffect(() => {
-        console.log('EMPLOYEES -', employees)
+        // console.log('EMPLOYEES -', employees)
         localStorage.setItem('WH_employees', JSON.stringify(employees))
     }, [employees])
 

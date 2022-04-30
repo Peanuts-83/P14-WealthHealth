@@ -1,7 +1,8 @@
 .view {
 	font-family: "Source Sans Pro", sans-serif;
 	font-size: 1.2rem;
-	margin: 50px 50px;
+	margin: 50px 50px 100px 50px;
+
 }
 
 .view-top,
@@ -10,7 +11,7 @@
 	margin-top: 20px;
 	margin-bottom: 20px;
 	justify-content: space-between;
-    transition: .4s;
+	transition: 0.4s;
 }
 
 .view-top *,
@@ -30,15 +31,17 @@
 	border-bottom: 1px solid black;
 }
 
-
+.active-page {
+	text-decoration: underline;
+}
 
 @media screen and (max-width: 1024px) {
-    .view-top,
-    .view-bottom {
-        flex-direction: column;
-        align-items: center;
-        font-size: 1rem;
-    }
+	.view-top,
+	.view-bottom {
+		flex-direction: column;
+		align-items: center;
+		font-size: 1rem;
+	}
 }
 
 @media screen and (max-width: 768px) {

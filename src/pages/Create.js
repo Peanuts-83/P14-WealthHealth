@@ -1,5 +1,5 @@
 import '../style/create.css'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { SimpleSelectMenu } from 'simple-select-menu'
 import Datepicker from '../components/Datepicker'
 import { states } from '../utils/states'

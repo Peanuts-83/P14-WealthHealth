@@ -1,10 +1,11 @@
 import React from 'react'
 import '../style/dataTable.css'
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data, start }) => {
     return (
         <div className='data-table'>
             <div className='employee-legend'>
+                <div className='employee-legend-num'>Id</div>
                 <div className='employee-legend-firstName' id="employee-cell1">First Name</div>
                 <div className='employee-legend-lastName' id="employee-cell2">Last Name</div>
                 <div className='employee-legend-startDate' id="employee-cell3">Start Date</div>
@@ -17,6 +18,7 @@ const DataTable = ({ data }) => {
             </div>
             {data.map((employee, i) => (
                 <div className='employee' id={i} key={i}>
+                    <div className='employee-num' id="employee-cell0">#{start + i + 1}</div>
                     <div className='employee-firstName' id="employee-cell1">{employee.firstName}</div>
                     <div className='employee-lastName' id="employee-cell2">{employee.lastName}</div>
                     <div className='employee-startDate' id="employee-cell3">{employee.startDate}</div>
