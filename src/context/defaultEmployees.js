@@ -7,7 +7,7 @@ export const employees = [
         address: {
             street: 'Fleet street',
             city: 'Orlando',
-            state: 'Alabama',
+            stateName: 'AL',
             zipCode: '15897',
         },
         department: 'Sales',
@@ -20,7 +20,7 @@ export const employees = [
         address: {
             street: 'Carnagy square',
             city: 'Bilder',
-            state: 'Kansas',
+            stateName: 'KS',
             zipCode: '23645',
         },
         department: 'Engineering',
@@ -32,8 +32,8 @@ export const employees = [
         startDate: '3/18/1997',
         address: {
             street: 'Bind street',
-            city: 'NYC',
-            state: 'Newyork',
+            city: 'Newyork City',
+            stateName: 'NY',
             zipCode: '87546',
         },
         department: 'Sales',
@@ -46,7 +46,7 @@ export const employees = [
         address: {
             street: 'Conway road, 7th',
             city: 'Birmingham',
-            state: 'California',
+            stateName: 'CA',
             zipCode: '78512',
         },
         department: 'Human Ressources',
@@ -59,7 +59,7 @@ export const employees = [
         address: {
             street: 'Dust street',
             city: 'Washington',
-            state: 'Washington',
+            stateName: 'WT',
             zipCode: '12365',
         },
         department: 'Legal',

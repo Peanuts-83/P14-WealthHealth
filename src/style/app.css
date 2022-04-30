@@ -33,7 +33,38 @@ a:hover {
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
-.create,
-.view {
+.create-button,
+.view-button {
+	font-size: 2rem;
 	font-family: Balthazar;
+	transition: .4s;
+}
+
+input,
+select {
+	font-size: 1.2rem;
+}
+
+@media screen and (max-width: 1024px) {
+	.create-button,
+	.view-button {
+		font-size: 1.5rem;
+	}
+
+	input,
+	select {
+		font-size: 1rem;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.create-button,
+	.view-button {
+		font-size: 1rem;
+	}
+
+	input,
+	select {
+		font-size: .7rem;
+	}
 }

@@ -35,8 +35,8 @@ const Header = () => {
             <img className='logo' src={logo} alt='logo' />
             <img className='logobas' src={logobas} alt='logobas' />
             <div className='nav-btns'>
-                <Link to='/' className={`create ${createClicked && 'active'}`} onClick={setBtnBackground} ref={create}>CREATE EMPLOYEE</Link>
-                <Link to='/view' className={`view ${viewClicked && 'active'}`} onClick={setBtnBackground} ref={view}>VIEW CURRENT EMPLOYEES</Link>
+                <Link to='/' className={`create-button ${createClicked && 'active'}`} onClick={setBtnBackground} ref={create}>CREATE EMPLOYEE</Link>
+                <Link to='/view' className={`view-button ${viewClicked && 'active'}`} onClick={setBtnBackground} ref={view}>VIEW CURRENT EMPLOYEES</Link>
             </div>
         </nav>
     )
