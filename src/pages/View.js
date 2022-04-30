@@ -8,6 +8,11 @@ import { Link } from 'react-router-dom'
 
 const View = () => {
   const employeesCtx = useEmployeesContext()
+
+  // SET components back to default once form is sent
+  const [initSelect, setInitSelect] = useState(false)
+  const initSct = { initSelect, setInitSelect }
+
   const [allEmployees, setAllEmployees] = useState(employeesCtx.employees)
   const [displayNum, setDisplayNum] = useState(10)
   const [displayPage, setDisplayPage] = useState(0)
@@ -64,7 +69,7 @@ const View = () => {
           Object.values(employee.address).some(field => field.toString().toLowerCase().includes(target))))
       setAllEmployees(searchResult)
       setSearchLength(target.length)
-      
+
     } else {
       setAllEmployees(employeesCtx.employees)
       setSearchLength(0)
@@ -75,7 +80,7 @@ const View = () => {
     <div className='view'>
       <div className='view-top'>
         <div className='view-top-select'>
-          <SimpleSelectMenu label='Show' options={['10', '25', '50', '100']} log={false} setvalue={changeDisplayNum} />
+          <SimpleSelectMenu label='Show' options={['10', '25', '50', '100']} log={false} setvalue={changeDisplayNum} init={initSct} />
           entries
         </div>
         <div className='view-top-search'>Search
