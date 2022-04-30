@@ -34,6 +34,7 @@
 .picker-day:hover,
 .picker-year:hover {
     background-color: var(--green-dark);
+	cursor: ns-resize;
 }
 
 .picker-month:hover {

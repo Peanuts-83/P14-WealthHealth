@@ -2,12 +2,21 @@ import '../style/create.css'
 import React, { useRef, useState } from 'react'
 import { SimpleSelectMenu } from 'simple-select-menu'
 import Datepicker from '../components/Datepicker'
+import ModalConfirm from '../components/ModalConfirm'
 import { states } from '../utils/states'
-import {useEmployeesContext} from '../context/employeesCtx'
+import { useEmployeesContext } from '../context/employeesCtx'
 
 const Create = () => {
   const employeesCtx = useEmployeesContext()
   const departmentOptions = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"]
+  // DISPLAY MODAL when new data is stored
+  const [dataStored, setDataStored] = useState(false)
+
+  // SET components back to default once form is sent
+  const [initDate, setInitDate] = useState(false)
+  const initDt = {initDate, setInitDate}
+  const [initSelect, setInitSelect] = useState(false)
+  const initSct = { initSelect, setInitSelect }
 
   // FORM values
   const [firstName, setFirstName] = useState('')
@@ -89,71 +98,95 @@ const Create = () => {
       errDepartment.current.innerText = ` `
     }
 
+    // Display errors || Save datas //
     if (errorCounter > 0) {
-      console.log('Errors to correct!')
       return
     } else {
-      console.log(`Employee data stored : ${JSON.stringify(res, null, 4)}`);
-      // TODO: reset form + modal confirmation
+      // Save datas
       employeesCtx.add(res)
+      employeesCtx.setInitForm(true)
+
+      // Reset all form
+      setFirstName('')
+      setLastName('')
+      setBirthDate('')
+      setStartDate('')
+      setStreet('')
+      setCity('')
+      setStateName('')
+      setZipCode('')
+      setDepartment('')
+
+      // Set menu components back to default
+      setInitDate(true)
+      setInitSelect(true)
+
+      // Display confirmation modal
+      setDataStored(true)
     }
   }
 
   return (
-    <form className='form' onSubmit={handleSubmit}>
-      <div className='form-parts'>
-        <div className='form-part-left'>
-          <div className='form-part-pair'>
-            <label htmlFor='firstName'>First Name</label>
-            <input name='firstName' type='text' placeholder=' - ' onChange={e => setFirstName(e.target.value)} />
-          </div>
-          <div className='error' ref={errFirstName}> </div>
-          <div className='form-part-pair'>
-            <label htmlFor='lastName'>Last Name</label>
-            <input name='lastName' type='text' placeholder=' - ' onChange={e => setLastName(e.target.value)} />
-          </div>
-          <div className='error' ref={errLastName}> </div>
-          <div className='form-part-pair'>
-            <Datepicker label="Birth date" setvalue={setBirthDate} />
-          </div>
-          <div className='error' ref={errBirthDate}> </div>
-          <div className='form-part-pair'>
-            <Datepicker label="Start date" setvalue={setStartDate} />
-          </div>
-          <div className='error' ref={errStartDate}> </div>
-        </div>
+    <div>
+      {dataStored && <ModalConfirm show={setDataStored} />}
+      <form className='form' onSubmit={handleSubmit}>
+        <div className='form-parts'>
 
-        <div className='form-part-right'>
-          <fieldset className='legend'>
-            <legend>Address</legend>
+          <div className='form-part-left'>
             <div className='form-part-pair'>
-              <label htmlFor='street'>Street</label>
-              <input name='street' type='text' placeholder=' - ' onChange={e => setStreet(e.target.value)} />
+              <label htmlFor='firstName'>First Name</label>
+              <input name='firstName' type='text' placeholder=' - ' value={firstName} onChange={e => setFirstName(e.target.value)} />
             </div>
-            <div className='error' ref={errStreet}> </div>
+            <div className='error' ref={errFirstName}> </div>
             <div className='form-part-pair'>
-              <label htmlFor='city'>City</label>
-              <input name='city' type='text' placeholder=' - ' onChange={e => setCity(e.target.value)} />
+              <label htmlFor='lastName'>Last Name</label>
+              <input name='lastName' type='text' placeholder=' - ' value={lastName} onChange={e => setLastName(e.target.value)} />
             </div>
-            <div className='error' ref={errCity}> </div>
+            <div className='error' ref={errLastName}> </div>
             <div className='form-part-pair'>
-              <SimpleSelectMenu label="State" options={states} placeholder="Please choose a State" log={false} setvalue={setStateName} />
+              <Datepicker label="Birth date" setvalue={setBirthDate} init={initDt} />
             </div>
-            <div className='error' ref={errStateName}> </div>
+            <div className='error' ref={errBirthDate}> </div>
             <div className='form-part-pair'>
-              <label htmlFor='code'>Zip code</label>
-              <input name='code' type='text' placeholder=' - ' onChange={e => setZipCode(e.target.value)} />
+              <Datepicker label="Start date" setvalue={setStartDate} init={initDt} />
             </div>
-            <div className='error' ref={errZipCode}> </div>
-          </fieldset>
+            <div className='error' ref={errStartDate}> </div>
+          </div>
+
+          <div className='form-part-right'>
+            <fieldset className='legend'>
+              <legend>Address</legend>
+              <div className='form-part-pair'>
+                <label htmlFor='street'>Street</label>
+                <input name='street' type='text' value={street} placeholder=' - ' onChange={e => setStreet(e.target.value)} />
+              </div>
+              <div className='error' ref={errStreet}> </div>
+              <div className='form-part-pair'>
+                <label htmlFor='city'>City</label>
+                <input name='city' type='text' value={city} placeholder=' - ' onChange={e => setCity(e.target.value)} />
+              </div>
+              <div className='error' ref={errCity}> </div>
+              <div className='form-part-pair'>
+                <SimpleSelectMenu label="State" options={states} value={stateName} placeholder="Please choose a State" log={false} setvalue={setStateName} init={initSct} />
+              </div>
+              <div className='error' ref={errStateName}> </div>
+              <div className='form-part-pair'>
+                <label htmlFor='code'>Zip code</label>
+                <input name='code' type='text' value={zipCode} placeholder=' - ' onChange={e => setZipCode(e.target.value)} />
+              </div>
+              <div className='error' ref={errZipCode}> </div>
+            </fieldset>
+          </div>
+
         </div>
-      </div>
-      <div className='department form-part-pair'>
-        <SimpleSelectMenu label="Department" options={departmentOptions} placeholder="Please choose a Department" log={false} setvalue={setDepartment} />
-      </div>
-      <div className='error errDepartment' ref={errDepartment}> </div>
-      <input className='save-btn' type='submit' value='Save' />
-    </form>
+        
+        <div className='department form-part-pair'>
+          <SimpleSelectMenu label="Department" options={departmentOptions} value={department} placeholder="Please choose a Department" log={false} setvalue={setDepartment} init={initSct} />
+        </div>
+        <div className='error errDepartment' ref={errDepartment}> </div>
+        <input className='save-btn' type='submit' value='Save' />
+      </form>
+    </div>
   )
 }
 

@@ -1,24 +1,48 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Fragment } from "react"
 import PropTypes from 'prop-types'
 import './simpleSelectMenu.css'
 
 /**
  Simple select menu Library
- @param {string} label - Label for the select menu
- @param {array} options - Array of all the options.
+ @param {string} label - Label for the select menu. Optional
+ @param {array} options - Array of all the options. Required
     @param {string} elt - Option 1 : array of strings. Value returned is the value.toLowerCase() with white spaces converted to underscore
     @param {object} elt - Option 2 : array of objects. Value returned is the value property of object
         @param {string} name - Text to display in select menu.
         @param {string} value - Value returned when selected.
 @param {string} placeholder - Text to display at start. Optional.
-@param {boolean} log - Displays nodeElement & value returned in console. Default to true.
-@param {function} setvalue - Setter to return the selected value to parent Component.
+@param {boolean} log - Displays nodeElement & value returned in console. Optional. Default to true.
+@param {function} setvalue - Setter to return the selected value to parent Component. Required
+@param {object} init - Init getter/setter. Required
+    @param {boolean} initSelect - Getter to init action state.
+    @param {function} setInitSelect - Setter to set init action to false.
 @returns SimpleSelectMenu component.
 */
-const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'], placeholder, log = true, setvalue }) => {
+const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'], placeholder, log = true, setvalue, init }) => {
+
+    const selectMenu = useRef()
+    const {initSelect, setInitSelect} = init
+    useEffect(() => {
+        if (initSelect === true) {
+            if (placeholder !== undefined && placeholder !== false) {
+                setVal('')
+            } else {
+                if (typeof options[0] === 'string') {
+                    setVal(options[0])
+                } else {
+                    setVal(options[0].value)
+                }
+            }
+        }
+        setInitSelect(false)
+    }, [initSelect])
+
+    const [val, setVal] = useState('')
+
     function _returnValue(e) {
         log === true && console.log(e.target, `Value : ${e.target.value}`)
+        setVal(e.target.value)
         setvalue(e.target.value)
     }
 
@@ -26,7 +50,9 @@ const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'],
         <Fragment>
             <label name={label.toLowerCase()} className="simple-select-menu-label">{label}</label>
             <select
+                ref={selectMenu}
                 className="simple-select-menu-select"
+                value={val}
                 onChange={_returnValue}
             >
                 {placeholder !== undefined && placeholder !== false && (
@@ -56,7 +82,16 @@ SimpleSelectMenu.propTypes = {
             PropTypes.objectOf(PropTypes.string)
         ])
     ),
-    placeholder: PropTypes.string,
+    placeholder: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool
+    ]),
     log: PropTypes.bool,
-    setvalue: PropTypes.func
+    setvalue: PropTypes.func,
+    init: PropTypes.objectOf(
+        PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.func,
+        ])
+    )
 }

@@ -1,8 +1,10 @@
+import '../style/datepicker.css'
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import '../style/datepicker.css'
 
-const Datepicker = ({ label, setvalue }) => {
+const Datepicker = ({ label, setvalue, init }) => {
+
+    // GET actual date
     const now = new Date()
     const today = {}
     today.month = now.getMonth()
@@ -10,9 +12,12 @@ const Datepicker = ({ label, setvalue }) => {
     today.year = now.getFullYear()
     // { month: 12, day: 29/30/31, year: 1900-2050 }
 
-    const picker = useRef(null)
+    const picker = useRef()
     const [inputDate, setInputDate] = useState('')
+    // Getter/Setter to RESET to initial state once form is sent
+    const {initDate, setInitDate} = init
 
+    // DATE variables
     const monthNumbers = [...Array(12).keys()].map(i => i + 1)
     const [monthNum, setMonthNum] = useState(today.month)
     const [dayNumbers, setDayNumbers] = useState([...Array(31).keys()].map(i => i + 1))
@@ -20,6 +25,18 @@ const Datepicker = ({ label, setvalue }) => {
     const yearNumbers = [...Array(2050).keys()].map(i => i + 1).filter(i => i >= 1900)
     const [yearNum, setYearNum] = useState(today.year - 1900)
 
+    // RESET DatePicker once form is sent
+    useEffect(() => {
+        if (initDate === true) {
+            console.log('INIT DATE PICKER', today);
+            setMonthNum(today.month)
+            setDayNum(today.day - 1)
+            setYearNum(today.year - 1900)
+            setInitDate(false)
+        }
+    }, [initDate])
+
+    // UPDATE number of days when changing month
     useEffect(() => {
         if ([3, 5, 8, 10].includes(monthNum)) {
             setDayNumbers([...Array(30).keys()].map(i => i + 1))
@@ -32,12 +49,13 @@ const Datepicker = ({ label, setvalue }) => {
         }
     }, [monthNum])
 
+    // FORMAT date
     useEffect(() => {
         setInputDate(`${monthNumbers[monthNum]}/${dayNumbers[dayNum]}/${yearNumbers[yearNum]}`)
-
+        console.log('INPUT DATE SET', monthNum, dayNum, yearNum);
     }, [monthNum, dayNum, yearNum])
 
-
+    // SETTERS for date using mouse wheel or chevrons up/down
     function setNum(e, type, inc = null) {
         const types = {
             month: {
@@ -61,7 +79,7 @@ const Datepicker = ({ label, setvalue }) => {
         const setter = types[type].setter
         const ref = types[type].ref
 
-
+        // MOUSE WHEEL
         if (e.deltaY) {
             if (e.deltaY > 0) {
                 if (getter <= ref.length - 2) {
@@ -74,6 +92,7 @@ const Datepicker = ({ label, setvalue }) => {
             }
         }
 
+        // CHEVRONS UP/DOWN
         if (inc) {
             if (inc > 0 && getter <= ref.length - 2) {
                 setter(getter + 1)
@@ -83,13 +102,14 @@ const Datepicker = ({ label, setvalue }) => {
         }
     }
 
+    // SHOW component
     function showPicker() {
         picker.current.style.display = 'flex'
     }
 
+    // HIDE component & SET date
     function hidePicker() {
         picker.current.style.display = 'none'
-        // console.log('DATE SENT TO FORM -', inputDate);
         setvalue(inputDate)
     }
 

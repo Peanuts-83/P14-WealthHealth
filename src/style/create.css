@@ -59,6 +59,7 @@ select {
 	margin-top: 50px;
 	color: white;
 	background: var(--green-medium);
+	cursor: pointer;
 }
 
 .error {

@@ -10,9 +10,9 @@ const initialState = JSON.parse(localStorage.getItem('WH_employees')) || employe
 // Provider
 function EmployeeProvider(props) {
     const [employees, setEmployees] = useState(initialState)
+    const [initForm, setInitForm] = useState(false)
 
     useEffect(() => {
-        // console.log('EMPLOYEES -', employees)
         localStorage.setItem('WH_employees', JSON.stringify(employees))
     }, [employees])
 
@@ -40,7 +40,7 @@ function EmployeeProvider(props) {
         indexes.forEach(index => removeByIndex(index))
     }
 
-    const employeesData = { employees, add, removeByIndex, removeByName }
+    const employeesData = { employees, initForm, setInitForm, add, removeByIndex, removeByName }
     return (<EmployeesCtx.Provider value={employeesData} {...props} />)
 }
 

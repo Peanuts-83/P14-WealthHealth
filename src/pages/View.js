@@ -1,6 +1,6 @@
+import '../style/view.css'
 import React, { useEffect, useState } from 'react'
 import DataTable from '../components/DataTable'
-import '../style/view.css'
 import { useEmployeesContext } from '../context/employeesCtx'
 import { SimpleSelectMenu } from 'simple-select-menu'
 import { Link } from 'react-router-dom'
@@ -23,13 +23,11 @@ const View = () => {
 
   // Set results displayed on the screen
   function showResults(len, results = allEmployees) {
-    console.log('all -', allEmployees.length);
     setResults(results.slice(displayPage * len, displayPage * len + len))
   }
 
   // Set number of pages depending on number of results per page & allEmployees' length
   function countPages() {
-    console.log('Number of pages :', Math.ceil(allEmployees.length / displayNum));
     setPagesArray([...Array(Math.ceil(allEmployees.length / displayNum))])
   }
 
@@ -47,8 +45,10 @@ const View = () => {
     setDisplayNum(num)
   }
 
+  // SEARCH table for value & FILTER table
   function searchData(e) {
     const target = e.target.value.toString().toLowerCase()
+
     if (target.length >= 3) {
       if (target.length < searchLength) {
         const searchResult = employeesCtx.employees.filter(employee =>
@@ -58,11 +58,13 @@ const View = () => {
         setSearchLength(target.length)
         return
       }
+
       const searchResult = allEmployees.filter(employee =>
         Object.values(employee).some(field => field.toString().toLowerCase().includes(target) ||
           Object.values(employee.address).some(field => field.toString().toLowerCase().includes(target))))
       setAllEmployees(searchResult)
       setSearchLength(target.length)
+      
     } else {
       setAllEmployees(employeesCtx.employees)
       setSearchLength(0)
@@ -82,6 +84,7 @@ const View = () => {
       </div>
 
       <DataTable data={results} start={displayPage * displayNum} />
+
       <div className='view-bottom'>
         <div>Showing {displayPage + 1} to {pagesArray.length} of {allEmployees.length} entries</div>
         <div>

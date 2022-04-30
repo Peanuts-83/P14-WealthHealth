@@ -1,6 +1,6 @@
-# simple-select-menu - REACT component
+# simple-select-menu - REACT
 
-Create a select menu providing options to select.
+*Create a select menu providing options to select. It can take a placeholder as desired, returns value and can be set back to default state once form has been sent.*
 
 ## Installation
 
@@ -10,20 +10,23 @@ npm install simple-select-menu
 
 ## Usage
 
-### Five parameters shall be implemented
+### Six parameters shall be implemented
 
 ---
 
-* **label** {string} - The text to display in front of the select menu.
-* **options** {array} - Options MUST BE an array.
+* **label** {string} - The text to display in front of the select menu. *Optional*
+* **options** {array} - Options MUST BE an array. *Required*
   * **case 1** : {string} - Strings used as-is for displayed text, value returned is a lower case version of the string with white spaces converted to underscore ('_').
   * **case 2** : {object} - {name: 'optionText', value: 'returnedValue'}
     * **name** {string} - Displayed text.
     * **value** {string} - Returned value on select.
 
-* **placeholder** {string} - Text displayed at start when no selection has been done. Optional. Can be either unset or set to false.
-* **log** {boolean} - Displays nodeElement and returned value in console. *Default to true*.
-* **setter** {function} - Setter to return the selected value to parent Component.
+* **placeholder** {string} - Text displayed at start when no selection has been done. *Optional. Can be either unset or set to false.*
+* **log** {boolean} - Displays nodeElement and returned value in console. *Optional. Default to true*.
+* **setvalue** {function} - Setter to return the selected value to parent Component. *Required*
+* **init** {object} - Init getter/setter to set menu back to default. *Required*
+  * **initSelect** {boolean} - Getter to init action state.
+  * **setInitSelect** {function} - Setter to set init action to false once menu has gone back too default state.
 
 ### Get selected value
 
@@ -45,22 +48,31 @@ These class selectors allow you to change the menu appearance :
 ## Example
 
 This code will help you experiment this simple lib.
-Import it and create getter/setter variables in order to give the menus a way to send back the selected values.
+Import it and create getter/setter variables in order to give the menus a way to send back the selected values, and to set the select menu back to default state once the form is sent.
 
 Please refer to [usage chapter](#usage) for further explanations.
 
 ```javascript
-import { render } from "react-dom";
-import SimpleSelectMenu from "simple-select-menu";
-import { useState } from 'react'
+import { render } from 'react-dom'
+import { SimpleSelectMenu } from 'simple-select-menu'
+import { useEffect, useState } from 'react'
 import './index.css'
 
 const App = () => {
   const [menu1Value, setMenu1Value] = useState()
   const [menu2Value, setMenu2Value] = useState()
+  const [initSelect, setInitSelect] = useState(false)
+  const init = {initSelect, setInitSelect}
+
+  useEffect(() => console.log('INIT MENUS -', initSelect), [initSelect])
+
+  function resetMenu(e) {
+    e.preventDefault()
+    setInitSelect(true)
+  }
 
   return (
-    <div className="container">
+    <form className="container" onSubmit={resetMenu}>
       <h1>Simple select menu</h1>
 
       <SimpleSelectMenu
@@ -69,6 +81,7 @@ const App = () => {
         placeholder="Please choose an option"
         log={false}
         setvalue={setMenu1Value}
+        init={init}
       />
       {menu1Value !== '' && menu1Value !== undefined && <span><em>returned value: {menu1Value}</em></span>}
       <br />
@@ -77,6 +90,7 @@ const App = () => {
         label="Select menu with objects (log = true)"
         options={[{ name: 'Option 1', value: 'opt1' }, { name: 'Option 2', value: 'opt2' }]}
         placeholder="Please choose an option"
+        init={init}
         setvalue={setMenu2Value}
       />
       {menu2Value !== '' && menu2Value !== undefined && <span><em>returned value: {menu2Value}</em></span>}
@@ -87,11 +101,13 @@ const App = () => {
         log={false}
         placeholder={false}
         setvalue={setMenu2Value}
+        init={init}
       />
       {menu2Value !== '' && menu2Value !== undefined && <span><em>returned value: {menu2Value}</em></span>}
-    </div>
-  );
+
+      <button type='submit'>SEND</button>
+    </form>
 }
 
-render(<App />, document.getElementById("root"));
+render(<App />, document.getElementById('root'))
 ```

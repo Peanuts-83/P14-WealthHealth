@@ -33,6 +33,10 @@
 
 .active-page {
 	text-decoration: underline;
+	border-radius: 3px;
+	color: white;
+	padding: 5px;
+	background-color: var(--green-dark);
 }
 
 @media screen and (max-width: 1024px) {
