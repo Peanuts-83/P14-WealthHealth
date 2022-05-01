@@ -1,20 +1,85 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../style/dataTable.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const DataTable = ({ data, start }) => {
+
+const DataTable = ({ data, start, setSorting, sortInfo }) => {
+    const columns = {
+        'firstName': 'First Name',
+        'lastName': 'Last Name',
+        'startDate': 'Start Date',
+        'department': 'Department',
+        'birthDate': 'Birth Date',
+        'street': 'Street',
+        'city': 'City',
+        'stateName': 'State',
+        'zipCode': 'Zip Code'
+    }
+    const [sorter, setSorter] = useState(null)
+    const [sortDir, setSortDir] = useState(null)
+    const { setSortBy, setSortWay } = setSorting
+    const { sortBy, sortWay } = sortInfo
+
+    useEffect(() => {
+        setSorter(sortBy)
+    }, [sortBy])
+
+    useEffect(() => {
+        setSortDir(sortWay)
+    }, [sortWay])
+
+    useEffect(() => {
+        setSortBy(sorter)
+    }, [sorter])
+
+    useEffect(() => {
+        setSortWay(sortDir)
+    }, [sortDir])
+
+    function toggleSort(e) {
+        let target
+        if (e.target.classList.contains('employee-legend-col')) {
+            target = e.target.querySelector('svg')
+        } else {
+            if (e.target.classList.contains('svg-inline--fa')) {
+                target = e.target
+            } else {
+                target = e.target.parentNode
+            }
+        }
+        const sortColumn = target.id.split('sort-')[1]
+        setSorter(sortColumn)
+        if (sortDir === null) {
+            setSortDir('up')
+        } else if (sortDir === 'up') {
+            setSortDir('down')
+        } else {
+            setSortDir(null)
+            setSorter(null)
+        }
+        // console.log('SORT COL -', sortColumn, 'SORT WAY -', sortDir);
+
+
+    }
+
     return (
         <div className='data-table'>
             <div className='employee-legend'>
                 <div className='employee-legend-num'>Id</div>
-                <div className='employee-legend-firstName' id="employee-cell1">First Name</div>
-                <div className='employee-legend-lastName' id="employee-cell2">Last Name</div>
-                <div className='employee-legend-startDate' id="employee-cell3">Start Date</div>
-                <div className='employee-legend-department' id="employee-cell4">Department</div>
-                <div className='employee-legend-birthDate' id="employee-cell5">Birth Date</div>
-                <div className='employee-legend-street' id="employee-cell6">Street</div>
-                <div className='employee-legend-city' id="employee-cell7">City</div>
-                <div className='employee-legend-stateName' id="employee-cell8">State</div>
-                <div className='employee-legend-zipCode' id="employee-cell9">Zip Code</div>
+                {Object.keys(columns).map((colName, i) => (
+                    <div className={`employee-legend-col employee-legend-${colName}`} id={`employee-cell${i + 1}`} key={i} onClick={toggleSort} >
+                        {columns[colName] + ' '}
+                        {sorter !== colName || sorter === null ? (
+                            <FontAwesomeIcon id={`sort-${colName}`} className='employee-legend-fa' icon="fa-sort" />
+                        ) :
+                            sortDir === 'up' ? (
+                                <FontAwesomeIcon id={`sort-${colName}`} className='employee-legend-fa' icon="fa-sort-up" onClick={toggleSort} />
+                            ) : (
+                                <FontAwesomeIcon id={`sort-${colName}`} className='employee-legend-fa' icon="fa-sort-down" onClick={toggleSort} />
+                            )
+                        }
+                    </div>
+                ))}
             </div>
             {data.length === 0 ? (
                 <p>- No result to display -</p>

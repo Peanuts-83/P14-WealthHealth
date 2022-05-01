@@ -54,6 +54,10 @@
 	background-color: var(--green-superlight);
 }
 
+.employee-legend-col {
+	cursor: pointer;
+}
+
 @media screen and (max-width: 1024px) {
 	.employee {
 		grid-template-columns: .1fr repeat(3, 1fr) 1.5fr 1fr 1.5fr 1fr 0.5fr 1fr;

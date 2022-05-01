@@ -9,22 +9,64 @@ import { Link } from 'react-router-dom'
 const View = () => {
   const employeesCtx = useEmployeesContext()
 
-  // SET components back to default once form is sent
+  // SET menu components back to default once form is sent
   const [initSelect, setInitSelect] = useState(false)
   const initSct = { initSelect, setInitSelect }
 
-  const [allEmployees, setAllEmployees] = useState(employeesCtx.employees)
+  // DISPLAY & SEARCH table management
+  const [allEmployees, setAllEmployees] = useState([...employeesCtx.employees])
   const [displayNum, setDisplayNum] = useState(10)
   const [displayPage, setDisplayPage] = useState(0)
   const [pagesArray, setPagesArray] = useState([1])
   const [results, setResults] = useState(allEmployees)
   const [searchLength, setSearchLength] = useState(0)
 
+  // SORT table management
+  const [sortBy, setSortBy] = useState(null)
+  const [sortWay, setSortWay] = useState(null)
+  const setSorting = { setSortBy, setSortWay }
+  const sortInfo = { sortBy, sortWay }
+
+  // SORT table by column & way
+  useEffect(() => {
+
+    // RESET sorting
+    if (sortBy === null) {
+      console.log('RESET SORT -', employeesCtx.employees.slice(0, 3));
+      setAllEmployees([...employeesCtx.employees])
+      return
+    }
+
+    // LAUNCH sorting
+    setAllEmployees(allEmployees.sort((a, b) => {
+      let valueA = a[sortBy]
+      let valueB = b[sortBy]
+      if (['street', 'city', 'stateName', 'zipCode'].includes(sortBy)) {
+        valueA = a.address[sortBy]
+        valueB = b.address[sortBy]
+      }
+
+      if (sortWay === 'up') {
+        if (valueA < valueB) { return -1 }
+        if (valueA > valueB) { return 1 }
+        return 0
+      } else if (sortWay === 'down') {
+        if (valueA > valueB) { return -1 }
+        if (valueA < valueB) { return 1 }
+        return 0
+      }
+      return 0
+    }))
+  }, [sortBy, sortWay])
+
+
   // Define number of pages & results displayed on displayNum || displayPage change
   useEffect(() => {
     countPages()
     showResults(+displayNum)
-  }, [displayNum, displayPage, allEmployees])
+    console.log(allEmployees.slice(0, 3));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayNum, displayPage, allEmployees, sortWay])
 
   // Set results displayed on the screen
   function showResults(len, results = allEmployees) {
@@ -52,6 +94,8 @@ const View = () => {
 
   // SEARCH table for value & FILTER table
   function searchData(e) {
+    setSortBy(null)
+    setSortWay(null)
     const target = e.target.value.toString().toLowerCase()
 
     if (target.length >= 3) {
@@ -71,7 +115,7 @@ const View = () => {
       setSearchLength(target.length)
 
     } else {
-      setAllEmployees(employeesCtx.employees)
+      setAllEmployees([...employeesCtx.employees])
       setSearchLength(0)
     }
   }
@@ -88,7 +132,7 @@ const View = () => {
         </div>
       </div>
 
-      <DataTable data={results} start={displayPage * displayNum} />
+      <DataTable data={results} start={displayPage * displayNum} setSorting={setSorting} sortInfo={sortInfo} />
 
       <div className='view-bottom'>
         <div>Showing {displayPage + 1} to {pagesArray.length} of {allEmployees.length} entries</div>

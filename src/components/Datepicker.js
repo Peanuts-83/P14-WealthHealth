@@ -34,6 +34,7 @@ const Datepicker = ({ label, setvalue, init }) => {
             setYearNum(today.year - 1900)
             setInitDate(false)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initDate])
 
     // UPDATE number of days when changing month
@@ -53,6 +54,7 @@ const Datepicker = ({ label, setvalue, init }) => {
     useEffect(() => {
         setInputDate(`${monthNumbers[monthNum]}/${dayNumbers[dayNum]}/${yearNumbers[yearNum]}`)
         console.log('INPUT DATE SET', monthNum, dayNum, yearNum);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [monthNum, dayNum, yearNum])
 
     // SETTERS for date using mouse wheel or chevrons up/down
