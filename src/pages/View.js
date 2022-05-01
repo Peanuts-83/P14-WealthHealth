@@ -22,10 +22,8 @@ const View = () => {
   const [searchLength, setSearchLength] = useState(0)
 
   // SORT table management
-  const [sortBy, setSortBy] = useState(null)
-  const [sortWay, setSortWay] = useState(null)
-  const setSorting = { setSortBy, setSortWay }
-  const sortInfo = { sortBy, sortWay }
+  const { setSortBy, setSortWay } = employeesCtx.setSorting
+  const { sortBy, sortWay } = employeesCtx.sortInfo
 
   // SORT table by column & way
   useEffect(() => {
@@ -119,6 +117,7 @@ const View = () => {
       setSearchLength(0)
     }
   }
+  
 
   return (
     <div className='view'>
@@ -132,7 +131,7 @@ const View = () => {
         </div>
       </div>
 
-      <DataTable data={results} start={displayPage * displayNum} setSorting={setSorting} sortInfo={sortInfo} />
+      <DataTable data={results} start={displayPage * displayNum} />
 
       <div className='view-bottom'>
         <div>Showing {displayPage + 1} to {pagesArray.length} of {allEmployees.length} entries</div>

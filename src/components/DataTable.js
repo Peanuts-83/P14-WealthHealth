@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import '../style/dataTable.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEmployeesContext } from '../context/employeesCtx'
 
 
-const DataTable = ({ data, start, setSorting, sortInfo }) => {
+const DataTable = ({ data, start }) => {
     const columns = {
         'firstName': 'First Name',
         'lastName': 'Last Name',
@@ -15,26 +16,10 @@ const DataTable = ({ data, start, setSorting, sortInfo }) => {
         'stateName': 'State',
         'zipCode': 'Zip Code'
     }
-    const [sorter, setSorter] = useState(null)
-    const [sortDir, setSortDir] = useState(null)
-    const { setSortBy, setSortWay } = setSorting
-    const { sortBy, sortWay } = sortInfo
 
-    useEffect(() => {
-        setSorter(sortBy)
-    }, [sortBy])
-
-    useEffect(() => {
-        setSortDir(sortWay)
-    }, [sortWay])
-
-    useEffect(() => {
-        setSortBy(sorter)
-    }, [sorter])
-
-    useEffect(() => {
-        setSortWay(sortDir)
-    }, [sortDir])
+    const employeesCtx = useEmployeesContext()
+    const { setSortBy, setSortWay } = employeesCtx.setSorting
+    const { sortBy, sortWay } = employeesCtx.sortInfo
 
     function toggleSort(e) {
         let target
@@ -48,18 +33,15 @@ const DataTable = ({ data, start, setSorting, sortInfo }) => {
             }
         }
         const sortColumn = target.id.split('sort-')[1]
-        setSorter(sortColumn)
-        if (sortDir === null) {
-            setSortDir('up')
-        } else if (sortDir === 'up') {
-            setSortDir('down')
+        setSortBy(sortColumn)
+        if (sortWay === null) {
+            setSortWay('up')
+        } else if (sortWay === 'up') {
+            setSortWay('down')
         } else {
-            setSortDir(null)
-            setSorter(null)
+            setSortWay(null)
+            setSortBy(null)
         }
-        // console.log('SORT COL -', sortColumn, 'SORT WAY -', sortDir);
-
-
     }
 
     return (
@@ -69,10 +51,10 @@ const DataTable = ({ data, start, setSorting, sortInfo }) => {
                 {Object.keys(columns).map((colName, i) => (
                     <div className={`employee-legend-col employee-legend-${colName}`} id={`employee-cell${i + 1}`} key={i} onClick={toggleSort} >
                         {columns[colName] + ' '}
-                        {sorter !== colName || sorter === null ? (
+                        {sortBy !== colName || sortBy === null ? (
                             <FontAwesomeIcon id={`sort-${colName}`} className='employee-legend-fa' icon="fa-sort" />
                         ) :
-                            sortDir === 'up' ? (
+                            sortWay === 'up' ? (
                                 <FontAwesomeIcon id={`sort-${colName}`} className='employee-legend-fa' icon="fa-sort-up" onClick={toggleSort} />
                             ) : (
                                 <FontAwesomeIcon id={`sort-${colName}`} className='employee-legend-fa' icon="fa-sort-down" onClick={toggleSort} />

@@ -1,9 +1,9 @@
 import '../style/datepicker.css'
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEmployeesContext } from '../context/employeesCtx'
 
-const Datepicker = ({ label, setvalue, init }) => {
-
+const Datepicker = ({ label, setvalue }) => {
     // GET actual date
     const now = new Date()
     const today = {}
@@ -12,10 +12,11 @@ const Datepicker = ({ label, setvalue, init }) => {
     today.year = now.getFullYear()
     // { month: 12, day: 29/30/31, year: 1900-2050 }
 
+    // SET component back to default once form is sent
+    const employeesCtx = useEmployeesContext()
+    const {init, setInit} = employeesCtx.initComponent
     const picker = useRef()
     const [inputDate, setInputDate] = useState('')
-    // Getter/Setter to RESET to initial state once form is sent
-    const {initDate, setInitDate} = init
 
     // DATE variables
     const monthNumbers = [...Array(12).keys()].map(i => i + 1)
@@ -27,15 +28,15 @@ const Datepicker = ({ label, setvalue, init }) => {
 
     // RESET DatePicker once form is sent
     useEffect(() => {
-        if (initDate === true) {
+        if (init === true) {
             console.log('INIT DATE PICKER', today);
             setMonthNum(today.month)
             setDayNum(today.day - 1)
             setYearNum(today.year - 1900)
-            setInitDate(false)
+            setInit(false)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [initDate])
+    }, [init])
 
     // UPDATE number of days when changing month
     useEffect(() => {

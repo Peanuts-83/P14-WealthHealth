@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { employees } from './defaultEmployees'
+import { employees } from '../utils/defaultEmployees'
 
 // Context
 export const EmployeesCtx = createContext()
@@ -11,6 +11,16 @@ const initialState = JSON.parse(localStorage.getItem('WH_employees')) || employe
 function EmployeeProvider(props) {
     const [employees, setEmployees] = useState(initialState)
     const [initForm, setInitForm] = useState(false)
+
+    // SORT table management
+    const [sortBy, setSortBy] = useState(null)
+    const [sortWay, setSortWay] = useState(null)
+    const setSorting = { setSortBy, setSortWay }
+    const sortInfo = { sortBy, sortWay }
+
+    // INIT form components
+    const [init, setInit] = useState(false)
+    const initComponent = { init, setInit }
 
     useEffect(() => {
         localStorage.setItem('WH_employees', JSON.stringify(employees))
@@ -40,7 +50,17 @@ function EmployeeProvider(props) {
         indexes.forEach(index => removeByIndex(index))
     }
 
-    const employeesData = { employees, initForm, setInitForm, add, removeByIndex, removeByName }
+    const employeesData = {
+        employees,
+        initForm,
+        setInitForm,
+        setSorting,
+        sortInfo,
+        initComponent,
+        add,
+        removeByIndex,
+        removeByName
+    }
     return (<EmployeesCtx.Provider value={employeesData} {...props} />)
 }
 

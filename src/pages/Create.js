@@ -7,16 +7,13 @@ import { states } from '../utils/states'
 import { useEmployeesContext } from '../context/employeesCtx'
 
 const Create = () => {
-  const employeesCtx = useEmployeesContext()
   const departmentOptions = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"]
   // DISPLAY MODAL when new data is stored
   const [dataStored, setDataStored] = useState(false)
 
-  // SET components back to default once form is sent
-  const [initDate, setInitDate] = useState(false)
-  const initDt = {initDate, setInitDate}
-  const [initSelect, setInitSelect] = useState(false)
-  const initSct = { initSelect, setInitSelect }
+  // SET component back to default once form is sent
+  const employeesCtx = useEmployeesContext()
+  const {init, setInit} = employeesCtx.initComponent
 
   // FORM values
   const [firstName, setFirstName] = useState('')
@@ -118,8 +115,7 @@ const Create = () => {
       setDepartment('')
 
       // Set menu components back to default
-      setInitDate(true)
-      setInitSelect(true)
+      setInit(true)
 
       // Display confirmation modal
       setDataStored(true)
@@ -144,11 +140,11 @@ const Create = () => {
             </div>
             <div className='error' ref={errLastName}> </div>
             <div className='form-part-pair'>
-              <Datepicker label="Birth date" setvalue={setBirthDate} init={initDt} />
+              <Datepicker label="Birth date" setvalue={setBirthDate} init={{init, setInit}} />
             </div>
             <div className='error' ref={errBirthDate}> </div>
             <div className='form-part-pair'>
-              <Datepicker label="Start date" setvalue={setStartDate} init={initDt} />
+              <Datepicker label="Start date" setvalue={setStartDate} init={{init, setInit}} />
             </div>
             <div className='error' ref={errStartDate}> </div>
           </div>
@@ -167,7 +163,7 @@ const Create = () => {
               </div>
               <div className='error' ref={errCity}> </div>
               <div className='form-part-pair'>
-                <SimpleSelectMenu label="State" options={states} value={stateName} placeholder="Please choose a State" log={false} setvalue={setStateName} init={initSct} />
+                <SimpleSelectMenu label="State" options={states} value={stateName} placeholder="Please choose a State" log={false} setvalue={setStateName} init={{init, setInit}} />
               </div>
               <div className='error' ref={errStateName}> </div>
               <div className='form-part-pair'>
@@ -179,9 +175,9 @@ const Create = () => {
           </div>
 
         </div>
-        
+
         <div className='department form-part-pair'>
-          <SimpleSelectMenu label="Department" options={departmentOptions} value={department} placeholder="Please choose a Department" log={false} setvalue={setDepartment} init={initSct} />
+          <SimpleSelectMenu label="Department" options={departmentOptions} value={department} placeholder="Please choose a Department" log={false} setvalue={setDepartment} init={{init, setInit}} />
         </div>
         <div className='error errDepartment' ref={errDepartment}> </div>
         <input className='save-btn' type='submit' value='Save' />
