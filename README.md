@@ -1,3 +1,73 @@
+[![forthebadge](./uses-react.svg)](https://fr.reactjs.org/)
+[![forthebadge](./uses-react-router-v6.svg)](https://reactrouter.com/)
+[![forthebadge](./made-with-create-react-app.svg)](https://create-react-app.dev/)
+
+# P14 - WealthHealth - Front-end data management
+
+[![![Visit website](./hp_vignette.png)](./hp_vignette.png)](https://peanuts-83.github.io/P14-wealth_health/)
+[![Project's presentation SlideShow](./pdf.png)](./Slide_P14.pdf) - SlideShow
+
+&nbsp;
+
+## Project's presentation
+
+*You work for the technology department of a large financial company, WealthHealth.
+This company uses an internal web application, called HRnet, which manages employee records. The app is old and uses jQuery on the front end, which leads to massive bugs and increased internal complaints. Your development team has been struggling for some time now to upgrade the app.*
+
+**This project has three main objectives:**
+
+* Create a front-end data management interface with the React framework.
+* Convert old jQuery plugins to modern React components.
+* Create an installable npm library from a React component and make it available on the npmjs.com repository.
+
+&nbsp;
+
+## FRONT-END setup
+
+Any package manager such as npm or yarn is required.
+
+* You have to clone the project locally with either/or :
+
+```bash
+# HTTPS
+ git clone https://github.com/Peanuts-83/P14-wealth_health.git
+
+
+# SSH
+git clone git@github.com:Peanuts-83/P14-wealth_health.git
+```
+
+* Then access inside your local repository and install dependencies using :
+
+```bash
+npm install
+```
+
+* Launch the application with :
+
+```bash
+ npm start
+ ```
+
+&nbsp;
+
+## USE the application
+
+The data is prefilled by default in order to make use of all the functionalities of the application. A **native React Context Store** is used here, and localStorage is used to avoid loss of data on user refresh. The final application should store data in online database anyway...
+
+You can create new Employees in the *Create section*.
+
+The dynamic table in the *View section* enables sorting and searching employees by any existing element.
+It is also possible to choose the length of the displayed results, or click dynamic pagination at the bottom of the table.
+
+&nbsp;
+
+## URL/PORT
+
+The default URL used by the application is <http://localhost:3000>.
+
+&nbsp;
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

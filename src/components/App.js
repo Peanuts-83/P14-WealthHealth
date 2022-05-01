@@ -10,7 +10,7 @@ import { EmployeeProvider } from '../context/employeesCtx'
 function App() {
   return (
     <EmployeeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/P14-wealth_health">
         <div className="App">
           <Header />
           <Routes>
