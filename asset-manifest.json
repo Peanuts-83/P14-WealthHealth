@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/P14-wealth_health/static/css/main.019db975.css",
+    "main.js": "/P14-wealth_health/static/js/main.20f0bf34.js",
+    "static/js/787.dff33684.chunk.js": "/P14-wealth_health/static/js/787.dff33684.chunk.js",
+    "static/media/logo2a.png": "/P14-wealth_health/static/media/logo2a.66b79ee8ec95acd76625.png",
+    "index.html": "/P14-wealth_health/index.html",
+    "main.019db975.css.map": "/P14-wealth_health/static/css/main.019db975.css.map",
+    "main.20f0bf34.js.map": "/P14-wealth_health/static/js/main.20f0bf34.js.map",
+    "787.dff33684.chunk.js.map": "/P14-wealth_health/static/js/787.dff33684.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.019db975.css",
+    "static/js/main.20f0bf34.js"
+  ]
+}
