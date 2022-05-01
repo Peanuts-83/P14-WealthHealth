@@ -1,8 +1,16 @@
 import '../style/datepicker.css'
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PropTypes from 'prop-types'
 import { useEmployeesContext } from '../context/employeesCtx'
 
+/**
+ * It's a date picker component that allows the user to select a date using a mouse wheel or chevrons
+ * up/down
+ * @param {string} label - Text to display in front of input.
+ * @param {function} setvalue - Setter to update date selected to parent component.
+ * @returns A date picker component.
+ */
 const Datepicker = ({ label, setvalue }) => {
     // GET actual date
     const now = new Date()
@@ -54,7 +62,6 @@ const Datepicker = ({ label, setvalue }) => {
     // FORMAT date
     useEffect(() => {
         setInputDate(`${monthNumbers[monthNum]}/${dayNumbers[dayNum]}/${yearNumbers[yearNum]}`)
-        console.log('INPUT DATE SET', monthNum, dayNum, yearNum);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [monthNum, dayNum, yearNum])
 
@@ -150,3 +157,8 @@ const Datepicker = ({ label, setvalue }) => {
 }
 
 export default Datepicker
+
+Datepicker.propTypes = {
+    label: PropTypes.string.isRequired,
+    setvalue: PropTypes.func.isRequired,
+}

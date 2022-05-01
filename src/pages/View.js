@@ -1,17 +1,21 @@
 import '../style/view.css'
 import React, { useEffect, useState } from 'react'
-import DataTable from '../components/DataTable'
-import { useEmployeesContext } from '../context/employeesCtx'
-import { SimpleSelectMenu } from 'simple-select-menu'
 import { Link } from 'react-router-dom'
+import DataTable from '../components/DataTable'
+import { SimpleSelectMenu } from 'simple-select-menu'
+import { useEmployeesContext } from '../context/employeesCtx'
 
 
+/**
+ * It displays a table of employees, with a search bar, a number of results per page selector, and a
+ * pagination
+ * @returns View - A React component
+ */
 const View = () => {
   const employeesCtx = useEmployeesContext()
 
   // SET menu components back to default once form is sent
-  const [initSelect, setInitSelect] = useState(false)
-  const initSct = { initSelect, setInitSelect }
+  const initComponent = employeesCtx.initComponent
 
   // DISPLAY & SEARCH table management
   const [allEmployees, setAllEmployees] = useState([...employeesCtx.employees])
@@ -27,14 +31,11 @@ const View = () => {
 
   // SORT table by column & way
   useEffect(() => {
-
     // RESET sorting
     if (sortBy === null) {
-      console.log('RESET SORT -', employeesCtx.employees.slice(0, 3));
       setAllEmployees([...employeesCtx.employees])
       return
     }
-
     // LAUNCH sorting
     setAllEmployees(allEmployees.sort((a, b) => {
       let valueA = a[sortBy]
@@ -55,6 +56,7 @@ const View = () => {
       }
       return 0
     }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy, sortWay])
 
 
@@ -62,7 +64,6 @@ const View = () => {
   useEffect(() => {
     countPages()
     showResults(+displayNum)
-    console.log(allEmployees.slice(0, 3));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayNum, displayPage, allEmployees, sortWay])
 
@@ -97,6 +98,7 @@ const View = () => {
     const target = e.target.value.toString().toLowerCase()
 
     if (target.length >= 3) {
+      // USER errases letter
       if (target.length < searchLength) {
         const searchResult = employeesCtx.employees.filter(employee =>
           Object.values(employee).some(field => field.toString().toLowerCase().includes(target) ||
@@ -105,7 +107,7 @@ const View = () => {
         setSearchLength(target.length)
         return
       }
-
+      // USER adds letter
       const searchResult = allEmployees.filter(employee =>
         Object.values(employee).some(field => field.toString().toLowerCase().includes(target) ||
           Object.values(employee.address).some(field => field.toString().toLowerCase().includes(target))))
@@ -113,17 +115,18 @@ const View = () => {
       setSearchLength(target.length)
 
     } else {
+      // RESET table to general table
       setAllEmployees([...employeesCtx.employees])
       setSearchLength(0)
     }
   }
-  
+
 
   return (
     <div className='view'>
       <div className='view-top'>
         <div className='view-top-select'>
-          <SimpleSelectMenu label='Show' options={['10', '25', '50', '100']} log={false} setvalue={changeDisplayNum} init={initSct} />
+          <SimpleSelectMenu label='Show' options={['10', '25', '50', '100']} log={false} setvalue={changeDisplayNum} initComponent={initComponent} />
           entries
         </div>
         <div className='view-top-search'>Search

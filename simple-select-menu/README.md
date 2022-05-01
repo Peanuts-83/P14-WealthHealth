@@ -24,9 +24,9 @@ npm install simple-select-menu
 * **placeholder** {string} - Text displayed at start when no selection has been done. *Optional. Can be either unset or set to false.*
 * **log** {boolean} - Displays nodeElement and returned value in console. *Optional. Default to true*.
 * **setvalue** {function} - Setter to return the selected value to parent Component. *Required*
-* **init** {object} - Init getter/setter to set menu back to default. *Required*
-  * **initSelect** {boolean} - Getter to init action state.
-  * **setInitSelect** {function} - Setter to set init action to false once menu has gone back too default state.
+* **initComponent** {object} - Init getter/setter to set menu back to default. *Required*
+  * **init** {boolean} - Getter to init action state.
+  * **setInit** {function} - Setter to set init action to false once menu has gone back too default state.
 
 ### Get selected value
 
@@ -61,14 +61,14 @@ import './index.css'
 const App = () => {
   const [menu1Value, setMenu1Value] = useState()
   const [menu2Value, setMenu2Value] = useState()
-  const [initSelect, setInitSelect] = useState(false)
-  const init = {initSelect, setInitSelect}
+  const [init, setInit] = useState(false)
+  const initComponent = {init, setInit}
 
-  useEffect(() => console.log('INIT MENUS -', initSelect), [initSelect])
+  useEffect(() => console.log('INIT MENUS -', init), [init])
 
   function resetMenu(e) {
     e.preventDefault()
-    setInitSelect(true)
+    setInit(true)
   }
 
   return (
@@ -81,7 +81,7 @@ const App = () => {
         placeholder="Please choose an option"
         log={false}
         setvalue={setMenu1Value}
-        init={init}
+        initComponent={initComponent}
       />
       {menu1Value !== '' && menu1Value !== undefined && <span><em>returned value: {menu1Value}</em></span>}
       <br />
@@ -90,7 +90,7 @@ const App = () => {
         label="Select menu with objects (log = true)"
         options={[{ name: 'Option 1', value: 'opt1' }, { name: 'Option 2', value: 'opt2' }]}
         placeholder="Please choose an option"
-        init={init}
+        initComponent={initComponent}
         setvalue={setMenu2Value}
       />
       {menu2Value !== '' && menu2Value !== undefined && <span><em>returned value: {menu2Value}</em></span>}
@@ -101,13 +101,15 @@ const App = () => {
         log={false}
         placeholder={false}
         setvalue={setMenu2Value}
-        init={init}
+        initComponent={initComponent}
       />
       {menu2Value !== '' && menu2Value !== undefined && <span><em>returned value: {menu2Value}</em></span>}
 
       <button type='submit'>SEND</button>
     </form>
+  );
 }
+
 
 render(<App />, document.getElementById('root'))
 ```

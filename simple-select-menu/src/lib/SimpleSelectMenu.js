@@ -14,17 +14,17 @@ import './simpleSelectMenu.css'
 @param {string} placeholder - Text to display at start. Optional.
 @param {boolean} log - Displays nodeElement & value returned in console. Optional. Default to true.
 @param {function} setvalue - Setter to return the selected value to parent Component. Required
-@param {object} init - Init getter/setter. Required
-    @param {boolean} initSelect - Getter to init action state.
-    @param {function} setInitSelect - Setter to set init action to false.
+@param {object} initComponent - Init getter/setter. Required
+    @param {boolean} init - Getter to init action state.
+    @param {function} setInit - Setter to set init action to false.
 @returns SimpleSelectMenu component.
 */
-const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'], placeholder, log = true, setvalue, init }) => {
+const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'], placeholder, log = true, setvalue, initComponent }) => {
 
     const selectMenu = useRef()
-    const {initSelect, setInitSelect} = init
+    const {init, setInit} = initComponent
     useEffect(() => {
-        if (initSelect === true) {
+        if (init === true) {
             if (placeholder !== undefined && placeholder !== false) {
                 setVal('')
             } else {
@@ -35,8 +35,8 @@ const SimpleSelectMenu = ({ label = 'Label', options = ['Option 1', 'Option 2'],
                 }
             }
         }
-        setInitSelect(false)
-    }, [initSelect])
+        setInit(false)
+    }, [init])
 
     const [val, setVal] = useState('')
 
@@ -80,18 +80,18 @@ SimpleSelectMenu.propTypes = {
         PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.objectOf(PropTypes.string)
-        ])
+        ]).isRequired
     ),
     placeholder: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.bool
     ]),
     log: PropTypes.bool,
-    setvalue: PropTypes.func,
-    init: PropTypes.objectOf(
+    setvalue: PropTypes.func.isRequired,
+    initComponent: PropTypes.objectOf(
         PropTypes.oneOfType([
             PropTypes.bool,
             PropTypes.func,
-        ])
+        ]).isRequired
     )
 }

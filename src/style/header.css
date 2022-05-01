@@ -37,7 +37,6 @@
 .footer {
 	height: 40px;
 	width: 100%;
-	/* max-width: 1400px; */
 	background-size: 100px;
 	opacity: 0.4;
 	margin-top: auto;
@@ -63,7 +62,7 @@
 	.logo {
 		width: 250px;
 	}
-	
+
 	.logobas {
 		width: 300px;
 	}

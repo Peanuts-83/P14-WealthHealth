@@ -1,10 +1,20 @@
 import React from 'react'
 import '../style/dataTable.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PropTypes from 'prop-types'
 import { useEmployeesContext } from '../context/employeesCtx'
 
 
+/**
+ * It renders a table of employees, with a header row that allows the user to sort the table by
+ * clicking on the header
+ * @param {Array} data - List of employees.
+ *   @param {Object} employee - Employee props.
+ * @param {Number} start - Beginning number of the displayed employees.
+ * @returns A table of employees
+ */
 const DataTable = ({ data, start }) => {
+    // LEGENDS
     const columns = {
         'firstName': 'First Name',
         'lastName': 'Last Name',
@@ -17,10 +27,12 @@ const DataTable = ({ data, start }) => {
         'zipCode': 'Zip Code'
     }
 
+    // SORT global variable management
     const employeesCtx = useEmployeesContext()
     const { setSortBy, setSortWay } = employeesCtx.setSorting
     const { sortBy, sortWay } = employeesCtx.sortInfo
 
+    // SORT function - toggle WAY up / down / null
     function toggleSort(e) {
         let target
         if (e.target.classList.contains('employee-legend-col')) {
@@ -88,3 +100,10 @@ const DataTable = ({ data, start }) => {
 }
 
 export default DataTable
+
+DataTable.propTypes = {
+    data: PropTypes.arrayOf(
+        PropTypes.object.isRequired
+    ),
+    start: PropTypes.number.isRequired,
+}

@@ -1,19 +1,25 @@
 import '../style/create.css'
 import React, { useRef, useState } from 'react'
-import { SimpleSelectMenu } from 'simple-select-menu'
 import Datepicker from '../components/Datepicker'
 import ModalConfirm from '../components/ModalConfirm'
+import { SimpleSelectMenu } from 'simple-select-menu'
 import { states } from '../utils/states'
 import { useEmployeesContext } from '../context/employeesCtx'
 
+/**
+ * It's a form that allows the user to create a new employee
+ * @returns A form with a few inputs and a submit button.
+ */
 const Create = () => {
   const departmentOptions = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"]
+
   // DISPLAY MODAL when new data is stored
   const [dataStored, setDataStored] = useState(false)
 
   // SET component back to default once form is sent
   const employeesCtx = useEmployeesContext()
-  const {init, setInit} = employeesCtx.initComponent
+  const initComponent = employeesCtx.initComponent
+  const {setInit} = initComponent
 
   // FORM values
   const [firstName, setFirstName] = useState('')
@@ -37,7 +43,7 @@ const Create = () => {
   const errZipCode = useRef(null)
   const errDepartment = useRef(null)
 
-  // Check form values & record new employee
+  // CHECK FORM values & RECORD new employee
   function handleSubmit(e) {
     e.preventDefault()
     const address = { street, city, stateName, zipCode }
@@ -95,15 +101,15 @@ const Create = () => {
       errDepartment.current.innerText = ` `
     }
 
-    // Display errors || Save datas //
+    // DISPLAY ERRORS OR SAVE DATA //
     if (errorCounter > 0) {
       return
     } else {
-      // Save datas
+      // SAVE datas to Context Store
       employeesCtx.add(res)
       employeesCtx.setInitForm(true)
 
-      // Reset all form
+      // RESET all form
       setFirstName('')
       setLastName('')
       setBirthDate('')
@@ -114,10 +120,10 @@ const Create = () => {
       setZipCode('')
       setDepartment('')
 
-      // Set menu components back to default
+      // SET menu components back to default
       setInit(true)
 
-      // Display confirmation modal
+      // DISPLAY confirmation modal
       setDataStored(true)
     }
   }
@@ -140,11 +146,11 @@ const Create = () => {
             </div>
             <div className='error' ref={errLastName}> </div>
             <div className='form-part-pair'>
-              <Datepicker label="Birth date" setvalue={setBirthDate} init={{init, setInit}} />
+              <Datepicker label="Birth date" setvalue={setBirthDate} init={initComponent} />
             </div>
             <div className='error' ref={errBirthDate}> </div>
             <div className='form-part-pair'>
-              <Datepicker label="Start date" setvalue={setStartDate} init={{init, setInit}} />
+              <Datepicker label="Start date" setvalue={setStartDate} init={initComponent} />
             </div>
             <div className='error' ref={errStartDate}> </div>
           </div>
@@ -163,7 +169,7 @@ const Create = () => {
               </div>
               <div className='error' ref={errCity}> </div>
               <div className='form-part-pair'>
-                <SimpleSelectMenu label="State" options={states} value={stateName} placeholder="Please choose a State" log={false} setvalue={setStateName} init={{init, setInit}} />
+                <SimpleSelectMenu label="State" options={states} value={stateName} placeholder="Please choose a State" log={false} setvalue={setStateName} initComponent={initComponent} />
               </div>
               <div className='error' ref={errStateName}> </div>
               <div className='form-part-pair'>
@@ -177,7 +183,7 @@ const Create = () => {
         </div>
 
         <div className='department form-part-pair'>
-          <SimpleSelectMenu label="Department" options={departmentOptions} value={department} placeholder="Please choose a Department" log={false} setvalue={setDepartment} init={{init, setInit}} />
+          <SimpleSelectMenu label="Department" options={departmentOptions} value={department} placeholder="Please choose a Department" log={false} setvalue={setDepartment} initComponent={initComponent} />
         </div>
         <div className='error errDepartment' ref={errDepartment}> </div>
         <input className='save-btn' type='submit' value='Save' />
