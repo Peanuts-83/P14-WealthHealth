@@ -2,7 +2,7 @@ import logo from '../assets/logo2a.png'
 
 const Footer = () => {
   return (
-    <div className='footer'style={{backgroundImage: `url(${logo})`}}></div>
+    <div className='footer' style={{backgroundImage: `url(${logo})`}}></div>
   )
 }
 
